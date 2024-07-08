@@ -13,7 +13,7 @@ export default function Clients()  {
  
     useEffect(() => {
         getClient();
-    }, []);
+    },);
  
     function getClient() {
         axios.get(`http://localhost/dounkafa/serveur/api2/${id}`).then(function(response) {

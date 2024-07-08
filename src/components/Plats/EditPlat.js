@@ -12,7 +12,7 @@ export default function Plats()  {
  
     useEffect(() => {
         getLivreur();
-    }, []);
+    });
  
     function getLivreur() {
         axios.get(`http://localhost/dounkafa/serveur/api_plat/${id}`).then(function(response) {

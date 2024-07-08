@@ -12,7 +12,7 @@ export default function Plats()  {
  
     useEffect(() => {
         getLivraison();
-    }, []);
+    });
  
     function getLivraison() {
         axios.get(`http://localhost/dounkafa/serveur/api_livraison/${id}`).then(function(response) {
@@ -70,8 +70,8 @@ export default function Plats()  {
           setPlats(response.data);
       });
   }
-  const [ selected,setSelected] = useState(Categories.value);
-  const [ selectedl, setSelectedl] = useState(Categories.value);
+  const [setSelected] = useState(Categories.value);
+  const [setSelectedl] = useState(Categories.value);
     return (
       <div className="row">
             <div className="col-2"></div>

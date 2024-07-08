@@ -12,7 +12,7 @@ export default function Livreurs()  {
  
     useEffect(() => {
         getLivreur();
-    }, []);
+    });
  
     function getLivreur() {
         axios.get(`http://localhost/dounkafa/serveur/api_livreur/${id}`).then(function(response) {

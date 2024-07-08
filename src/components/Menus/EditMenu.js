@@ -13,7 +13,7 @@ export default function EditMenu ()  {
  
     useEffect(() => {
         getLivreur();
-    }, []);
+    });
  
     function getLivreur() {
         axios.get(`http://localhost/dounkafa/serveur/api_categorie/${id}`).then(function(response) {

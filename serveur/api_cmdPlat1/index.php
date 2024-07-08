@@ -11,11 +11,30 @@ $conn = $objDb->connect();
 
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
+    // case 'GET':
+    //     $sql = "SELECT id, clients_id,plats_id,sum(quantite) as quantite,montant ,sum(montant) as total FROM commander_plat group by plats_id";
+    //     $path = explode('/', $_SERVER['REQUEST_URI']);
+    //     if(isset($path[4]) && is_numeric($path[4])) {
+    //         $sql .= " WHERE id = :id";
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->bindParam(':id', $path[4]);
+    //         $stmt->execute();
+    //         $clients = $stmt->fetch(PDO::FETCH_ASSOC);
+    //     } else {
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->execute();
+    //         $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     }
+    //     echo json_encode($clients);
+    //     break;
     case 'GET':
-        $sql = "SELECT id, clients_id,plats_id,sum(quantite) as quantite,montant ,sum(montant) as total FROM commander_plat group by plats_id";
+        $sql = "SELECT cp.id, cp.clients_id, p.nom as plat_nom, sum(cp.quantite) as quantite, cp.montant, sum(cp.montant) as total 
+                FROM commander_plat cp
+                JOIN plats p ON cp.plats_id = p.id
+                GROUP BY cp.plats_id";
         $path = explode('/', $_SERVER['REQUEST_URI']);
         if(isset($path[4]) && is_numeric($path[4])) {
-            $sql .= " WHERE id = :id";
+            $sql .= " WHERE cp.id = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $path[4]);
             $stmt->execute();
@@ -26,8 +45,7 @@ switch($method) {
             $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         echo json_encode($clients);
-        break;
-        
+        break;    
     case "POST":
         $user = json_decode( file_get_contents('php://input') );
         $sql = "INSERT INTO commander_plat(id,clients_id, plats_id, quantite, montant) VALUES(null, :clients_id, :plats_id, :quantite, :montant)";
